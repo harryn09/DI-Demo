@@ -1,0 +1,59 @@
+@page "/account"
+@model DigitalIdentitySite.Pages.AccountModel
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your account — Digital Identity Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="/index.html" class="nav-logo" aria-label="Digital Identity Services home">
+        <span class="logo-mark" aria-hidden="true">ID</span>
+        Digital Identity
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="/esl.html">Education Sector Logon</a></li>
+          <li><a href="/learner-identity-broker.html">Learner Identity Broker</a></li>
+          <li><a href="/nsi.html">National Student Index</a></li>
+          <li><a href="/enrol.html">Enrol</a></li>
+          <li><a href="/account/signout">Sign out</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding: 140px 0 80px;">
+      <div class="container">
+        <h1 class="h-serif">Welcome, @Model.DisplayName</h1>
+        @if (!string.IsNullOrEmpty(Model.Email))
+        {
+          <p>Signed in as @Model.Email</p>
+        }
+        <p><a href="/account/signout" class="btn btn-secondary btn-sm">Sign out</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 Ministry of Education, New Zealand Government</span>
+        <span>Digital Identity Team</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

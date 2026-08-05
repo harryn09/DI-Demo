@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESL Form 120 — Tertiary Access Request | Education Sector Logon</title>
+  <meta name="description" content="Apply online for Education Sector Logon (ESL) access and Tertiary Education Services using the digital ESL Form 120.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Digital Identity Services home">
+        <span class="logo-mark" aria-hidden="true">ID</span>
+        Digital Identity
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="esl.html">Education Sector Logon</a></li>
+          <li><a href="learner-identity-broker.html">Learner Identity Broker</a></li>
+          <li><a href="nsi.html">National Student Index</a></li>
+          <li><a href="enrol.html">Enrol</a></li>
+          <li><a href="/account/signin" id="nav-auth-link">Sign in</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="https://applications.education.govt.nz/education-sector-logon-esl" class="btn btn-primary btn-sm" rel="noopener">Get started</a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="esl.html">Education Sector Logon</a>
+          <span class="sep" aria-hidden="true">/</span>
+          <span class="current">Tertiary access request (Form 120)</span>
+        </nav>
+        <span class="eyebrow">ESL Form 120 · March 2026</span>
+        <h1 class="h-hero h-serif">Tertiary Education<br><span class="dim-word">Services access request</span></h1>
+        <p class="lede">Apply for an Education Sector Logon account and request access to on-line educational services for your tertiary organisation — the digital version of ESL Form 120.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="container form-shell">
+
+        <div class="form-intro-box reveal">
+          <p>Use this form to:</p>
+          <ul>
+            <li>Apply for an Education Sector Logon account if you don't already have one</li>
+            <li>Request access to on-line educational services using your ESL account, where an on-line Delegated Authoriser (DA) cannot allocate the access you need</li>
+          </ul>
+          <p><strong>Before you start:</strong></p>
+          <ol>
+            <li>Complete Parts 1, 2 and 4 yourself</li>
+            <li>Your organisation's Education Sector Authoriser or Delegated Authoriser completes Part 3</li>
+            <li>Complete Part 5 only if your organisation doesn't have an ESL on-line Delegated Authoriser</li>
+            <li>Submit the form — you'll be asked to confirm before a summary is sent to the Digital Identity team for processing</li>
+          </ol>
+        </div>
+
+        <p class="form-note reveal">Fields marked with an asterisk (<span class="req" aria-hidden="true">*</span>) are required.</p>
+
+        <form id="esl120-form" novalidate>
+
+          <section class="form-part reveal">
+            <h2>Before you begin</h2>
+            <p class="form-part-note">Tell us whether you already hold an ESL account.</p>
+            <div class="form-grid">
+              <fieldset class="form-fieldset span-2">
+                <legend>Do you already have an ESL account? <span class="req" aria-hidden="true">*</span></legend>
+                <div class="option-list">
+                  <label class="option-label">
+                    <input type="radio" name="accountStatus" value="I have an ESL account" required>
+                    <span><span class="option-title">I have an ESL account</span><span class="option-desc">Provide enough information in Part 1 below to find your existing account.</span></span>
+                  </label>
+                  <label class="option-label">
+                    <input type="radio" name="accountStatus" value="I don't have an ESL account">
+                    <span><span class="option-title">I don't have an ESL account</span><span class="option-desc">Evidence of Identity (EOI) will need to be sighted by your organisation's Education Sector Authoriser or Delegated Authoriser.</span></span>
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+          </section>
+
+          <section class="form-part reveal">
+            <h2>Part 1: Account owner's details</h2>
+            <p class="form-part-note">Given and family names must match your EOI documents.</p>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="esl-username">Education Sector Logon username <span class="form-help" style="display:inline">(if known)</span></label>
+                <input type="text" id="esl-username" name="eslUsername" autocomplete="username">
+              </div>
+              <div class="form-field">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Mr, Mrs, Ms, Mx…" autocomplete="honorific-prefix">
+              </div>
+              <div class="form-field">
+                <label for="given-names">Given names <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="given-names" name="givenNames" required autocomplete="given-name">
+              </div>
+              <div class="form-field">
+                <label for="surname">Surname <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="surname" name="surname" required autocomplete="family-name">
+              </div>
+              <div class="form-field">
+                <label for="preferred-name">Preferred name</label>
+                <input type="text" id="preferred-name" name="preferredName" autocomplete="nickname">
+                <span class="form-help">Add this only if a non-legal name is preferred.</span>
+              </div>
+              <div class="form-field">
+                <label for="dob">Date of birth <span class="req" aria-hidden="true">*</span></label>
+                <input type="date" id="dob" name="dateOfBirth" required autocomplete="bday">
+              </div>
+              <fieldset class="form-fieldset">
+                <legend>Gender <span class="req" aria-hidden="true">*</span></legend>
+                <div class="option-list" style="flex-direction:row; flex-wrap:wrap; gap:20px;">
+                  <label class="option-label" style="min-height:auto;"><input type="radio" name="gender" value="Male" required> Male</label>
+                  <label class="option-label" style="min-height:auto;"><input type="radio" name="gender" value="Female"> Female</label>
+                  <label class="option-label" style="min-height:auto;"><input type="radio" name="gender" value="Other"> Other</label>
+                </div>
+              </fieldset>
+              <div class="form-field">
+                <label for="work-email">Work email address <span class="req" aria-hidden="true">*</span></label>
+                <input type="email" id="work-email" name="workEmail" required autocomplete="email">
+              </div>
+              <div class="form-field">
+                <label for="work-phone">Work contact phone</label>
+                <input type="tel" id="work-phone" name="workPhone" autocomplete="tel">
+              </div>
+              <div class="form-field">
+                <label for="org-name">Organisation name <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="org-name" name="organisationName" required autocomplete="organization">
+              </div>
+              <div class="form-field">
+                <label for="org-code">MoE organisation code <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="org-code" name="organisationCode" required inputmode="numeric" placeholder="e.g. 1234">
+                <span class="form-help">Usually a 4-digit number — also called an EDUMIS number, MoE school code, NZQA number, Institution number or Provider Code.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-part reveal">
+            <h2>Part 2: Account owner's declaration</h2>
+            <p class="form-part-note">I declare that all information included in this application, and any EOI documents provided, are valid and correct. My personal information will be used to establish my identity and provide an ESL account, held by the Ministry of Education under the Privacy Act 2020.</p>
+            <div class="form-grid">
+              <fieldset class="form-fieldset span-2">
+                <legend class="sr-only" style="position:absolute;left:-9999px;">Declaration</legend>
+                <label class="option-label">
+                  <input type="checkbox" name="ownerDeclaration" value="Agreed" required>
+                  <span><span class="option-title">I have read and agree to provide my personal information for ESL use <span class="req" aria-hidden="true">*</span></span></span>
+                </label>
+              </fieldset>
+              <div class="form-field">
+                <label for="owner-name">Account owner's full name (print) <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="owner-name" name="ownerFullName" required autocomplete="name">
+                <span class="form-help">Typing your name here acts as your digital signature on this form.</span>
+              </div>
+              <div class="form-field">
+                <label for="owner-date">Date <span class="req" aria-hidden="true">*</span></label>
+                <input type="date" id="owner-date" name="ownerDeclarationDate" required>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-part reveal">
+            <h2>Part 3: Authoriser's confirmation</h2>
+            <p class="form-part-note">To be completed by your organisation's Education Sector Authoriser or Delegated Authoriser, confirming EOI was sighted and authorising the access requested in Parts 4 and 5.</p>
+            <div class="form-grid">
+              <fieldset class="form-fieldset span-2">
+                <legend class="sr-only" style="position:absolute;left:-9999px;">Authoriser declaration</legend>
+                <label class="option-label">
+                  <input type="checkbox" name="authoriserDeclaration" value="Confirmed">
+                  <span><span class="option-title">I confirm EOI documents were sighted and I authorise the access requested in Parts 4 and 5 for our organisation</span></span>
+                </label>
+              </fieldset>
+              <div class="form-field">
+                <label for="authoriser-name">Authoriser's full name (print)</label>
+                <input type="text" id="authoriser-name" name="authoriserFullName" autocomplete="name">
+              </div>
+              <div class="form-field">
+                <label for="authoriser-position">Position in organisation</label>
+                <input type="text" id="authoriser-position" name="authoriserPosition" autocomplete="organization-title">
+              </div>
+              <div class="form-field">
+                <label for="authoriser-date">Date</label>
+                <input type="date" id="authoriser-date" name="authoriserDate">
+              </div>
+            </div>
+          </section>
+
+          <section class="form-part reveal">
+            <h2>Part 4: On-line services access — available only through the Ministry of Education</h2>
+            <p class="form-part-note">Complete this part yourself. To access NZQA Tertiary services your organisation must be NZQF-accredited.</p>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="nzqa-location-code">NZQA location code</label>
+                <input type="text" id="nzqa-location-code" name="nzqaLocationCode" inputmode="numeric" placeholder="e.g. 01">
+                <span class="form-help">Usually a 2-digit code. If your organisation has only one location, use ‘01’.</span>
+              </div>
+              <fieldset class="form-fieldset span-2">
+                <legend>NZQA Extranet (NZQA_TEOE)</legend>
+                <div class="option-list">
+                  <label class="option-label">
+                    <input type="checkbox" name="nzqaExtranet" value="Tertiary provider - extranet user">
+                    <span><span class="option-title">Tertiary provider – extranet user</span><span class="option-desc">Required for any of the access roles below.</span></span>
+                  </label>
+                </div>
+
+                <p class="option-group-title">Learner record options (select 1)</p>
+                <div class="option-list">
+                  <label class="option-label"><input type="radio" name="learnerRecord" value="Basic Learner Record User"> <span><span class="option-title">Basic Learner Record User</span><span class="option-desc">View Record of Learning details.</span></span></label>
+                  <label class="option-label"><input type="radio" name="learnerRecord" value="Learner Details Administrator"> <span><span class="option-title">Learner Details Administrator</span><span class="option-desc">Record of Learning, Assessment Plans, Individual Qualification Check, Learner Details update.</span></span></label>
+                  <label class="option-label"><input type="radio" name="learnerRecord" value="Learner Results Administrator"> <span><span class="option-title">Learner Results Administrator</span><span class="option-desc">As above, plus file downloads, entering NQF results and qualification checks, batch/results search, ITO quarterly statistics.</span></span></label>
+                </div>
+
+                <p class="option-group-title">Profile options (select 1)</p>
+                <div class="option-list">
+                  <label class="option-label"><input type="radio" name="profileOption" value="TEO Profile View User"> <span><span class="option-title">TEO Profile View User</span><span class="option-desc">View your organisation's TEO profile.</span></span></label>
+                  <label class="option-label"><input type="radio" name="profileOption" value="TEO Profile and Application Administrator"> <span><span class="option-title">TEO Profile and Application Administrator</span><span class="option-desc">View and edit your TEO profile; commence and edit TEO applications.</span></span></label>
+                  <label class="option-label"><input type="radio" name="profileOption" value="TEO Management Representative"> <span><span class="option-title">TEO Management Representative</span><span class="option-desc">Full profile view/edit including compliance details, and submit TEO applications.</span></span></label>
+                </div>
+
+                <p class="option-group-title">TEO moderation (select 1)</p>
+                <div class="option-list">
+                  <label class="option-label"><input type="radio" name="teoModeration" value="Tertiary provider - View only"> <span><span class="option-title">Tertiary provider – View only</span><span class="option-desc">View moderation reports and results.</span></span></label>
+                  <label class="option-label"><input type="radio" name="teoModeration" value="Tertiary provider - Administration"> <span><span class="option-title">Tertiary provider – Administration</span><span class="option-desc">Enter judgements, upload material, query reports, prepare appeals.</span></span></label>
+                  <label class="option-label"><input type="radio" name="teoModeration" value="Tertiary provider - Management authoriser"> <span><span class="option-title">Tertiary provider – Management authoriser</span><span class="option-desc">Authorise submissions, manage plans, lodge appeals, view summaries.</span></span></label>
+                  <label class="option-label"><input type="radio" name="teoModeration" value="Tertiary provider - Management view only"> <span><span class="option-title">Tertiary provider – Management view only</span><span class="option-desc">Manage plans, lodge appeals, view summaries and action plans.</span></span></label>
+                </div>
+              </fieldset>
+            </div>
+          </section>
+
+          <section class="form-part reveal">
+            <h2>Part 5: Access your Delegated Authoriser can grant</h2>
+            <p class="form-part-note">Complete this part only if your organisation doesn't have an ESL on-line Delegated Authoriser (DA). You can find your organisation's DA via ESL self-service.</p>
+            <div class="form-grid">
+              <fieldset class="form-fieldset span-2">
+                <legend>DXP — TEC Data Exchange Platform (first-year Fees Free)</legend>
+                <div class="option-list">
+                  <label class="option-label"><input type="checkbox" name="dxp" value="Workspace User"> <span><span class="option-title">Workspace User</span><span class="option-desc">View and upload first-year Fees Free data submissions and reporting.</span></span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-fieldset span-2">
+                <legend>LNAAT — Literacy and Numeracy Adult Assessment Tool <span class="form-help" style="display:inline">(NSI access recommended)</span></legend>
+                <div class="option-list">
+                  <label class="option-label"><input type="checkbox" name="lnaat" value="Educator"> <span><span class="option-title">Educator</span><span class="option-desc">Administer assessments for learners assigned to them.</span></span></label>
+                  <label class="option-label"><input type="checkbox" name="lnaat" value="Organisation Administrator"> <span><span class="option-title">Organisation Administrator</span><span class="option-desc">Create and maintain LNAAT users within an organisation.</span></span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-fieldset span-2">
+                <legend>TEC Information Product</legend>
+                <div class="option-list">
+                  <label class="option-label"><input type="checkbox" name="tecInfoProduct" value="Information Product User (previously Nga Kete)"> <span><span class="option-title">Information Product User</span><span class="option-desc">Portal access to search public/private information sources and the TEC Qlik App library.</span></span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-fieldset span-2">
+                <legend>DXP Ngā Kete — TEC</legend>
+                <div class="option-list">
+                  <label class="option-label"><input type="checkbox" name="dxpNgaKete" value="DXP User Settings Admin"> <span><span class="option-title">DXP User Settings Admin</span><span class="option-desc">View an organisation's DXP Ngā Kete users and edit contact details.</span></span></label>
+                  <label class="option-label"><input type="checkbox" name="dxpNgaKete" value="DXP General Access User"> <span><span class="option-title">DXP General Access User</span><span class="option-desc">View, upload and submit data for Commitments, SDR, IND, Workforce Questionnaire, RS20 and general documents.</span></span></label>
+                  <label class="option-label"><input type="checkbox" name="dxpNgaKete" value="DXP Commercial Documents User"> <span><span class="option-title">DXP Commercial Documents User</span><span class="option-desc">View and upload documents classified as ‘Commercial Documents’.</span></span></label>
+                  <label class="option-label"><input type="checkbox" name="dxpNgaKete" value="DXP Information Products User"> <span><span class="option-title">DXP Information Products User</span><span class="option-desc">Access TEC information products.</span></span></label>
+                  <label class="option-label"><input type="checkbox" name="dxpNgaKete" value="DXP Full Access Read Only User"> <span><span class="option-title">DXP Full Access Read Only User</span><span class="option-desc">View-only access to an organisation's data submissions and documents.</span></span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-fieldset span-2">
+                <legend>Hapori Matatū — Teaching Council of Aotearoa Online Community</legend>
+                <div class="option-list">
+                  <label class="option-label"><input type="checkbox" name="haporiMatatu" value="Teacher"> <span><span class="option-title">Teacher</span><span class="option-desc">Registered teachers only — re-registration, certification, and community access. A teacher registration number is required.</span></span></label>
+                  <label class="option-label"><input type="checkbox" name="haporiMatatu" value="Professional Leader"> <span><span class="option-title">Professional Leader</span><span class="option-desc">Endorse registration/certification applications and report conduct or competence concerns.</span></span></label>
+                </div>
+              </fieldset>
+              <div class="form-field span-2">
+                <label for="teacher-reg-number">Teacher registration number <span class="form-help" style="display:inline">(if requesting Teacher access)</span></label>
+                <input type="text" id="teacher-reg-number" name="teacherRegistrationNumber">
+              </div>
+
+              <fieldset class="form-fieldset span-2">
+                <legend>National Student Index (NSI)</legend>
+                <div class="option-list">
+                  <label class="option-label"><input type="checkbox" name="nsi" value="Search and View"> <span><span class="option-title">Search and View</span><span class="option-desc">Search and view national student records.</span></span></label>
+                  <label class="option-label"><input type="checkbox" name="nsi" value="External User"> <span><span class="option-title">External User</span><span class="option-desc">Early Childhood and Tertiary access to search, create and update national student records.</span></span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-fieldset span-2">
+                <legend>Pūtake — NZQA Learning Management System</legend>
+                <div class="option-list">
+                  <label class="option-label"><input type="checkbox" name="putake" value="Tertiary Teacher"> <span><span class="option-title">Tertiary Teacher</span><span class="option-desc">Log in to Pūtake (NZQA LMS).</span></span></label>
+                </div>
+              </fieldset>
+            </div>
+          </section>
+
+          <div class="form-actions reveal">
+            <button type="submit" class="btn btn-primary">Submit request</button>
+            <span class="form-help">You'll be asked to confirm before this is sent to the Digital Identity team.</span>
+          </div>
+        </form>
+
+        <section id="esl120-summary" class="summary-panel" hidden aria-live="polite">
+          <h2 id="esl120-summary-heading">Request sent</h2>
+          <p>Your request has been sent to <strong id="esl120-recipient">the Digital Identity team</strong> via your email application. A copy of the summary is below for your records.</p>
+          <pre id="esl120-summary-text" class="summary-text"></pre>
+          <div class="summary-actions">
+            <button id="esl120-copy" type="button" class="btn btn-secondary">Copy summary</button>
+            <button id="esl120-start-over" type="button" class="btn btn-secondary">Start over</button>
+            <span id="esl120-copy-status" class="copy-status" role="status"></span>
+          </div>
+        </section>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <span class="logo-mark" aria-hidden="true">ID</span>
+            Digital Identity
+          </a>
+          <p>Digital Identity Services from the Ministry of Education, supporting secure access across the New Zealand education sector.</p>
+          <span class="footer-status"><span class="status-dot" aria-hidden="true"></span>All services operational</span>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="esl.html">Education Sector Logon</a></li>
+            <li><a href="learner-identity-broker.html">Learner Identity Broker</a></li>
+            <li><a href="nsi.html">National Student Index</a></li>
+            <li><a href="enrol.html">Enrol</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="https://applications.education.govt.nz" rel="noopener">Applications portal</a></li>
+            <li><a href="https://www.education.govt.nz" rel="noopener">education.govt.nz</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <ul>
+            <li><a href="index.html#get-started">Contact us</a></li>
+            <li><a href="index.html#services">Service overview</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Ministry of Education, New Zealand Government</span>
+        <span>Digital Identity Team</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/forms.js"></script>
+</body>
+</html>
