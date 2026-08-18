@@ -12,7 +12,7 @@ public static class AccountEndpoints
             Results.Challenge(
                 new Microsoft.AspNetCore.Authentication.AuthenticationProperties
                 {
-                    RedirectUri = string.IsNullOrEmpty(returnUrl) ? "/account" : returnUrl
+                    RedirectUri = IsLocalReturnUrl(returnUrl) ? returnUrl! : "/account"
                 },
                 new[] { OpenIdConnectDefaults.AuthenticationScheme }));
 
@@ -36,4 +36,10 @@ public static class AccountEndpoints
             return Results.Json(new { isAuthenticated = true, name, email });
         }).AllowAnonymous();
     }
+
+    private static bool IsLocalReturnUrl(string? returnUrl) =>
+        !string.IsNullOrEmpty(returnUrl)
+        && returnUrl.StartsWith('/')
+        && !returnUrl.StartsWith("//")
+        && !returnUrl.StartsWith("/\\");
 }

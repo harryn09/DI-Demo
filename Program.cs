@@ -32,7 +32,15 @@ builder.Services.Configure<OpenIdConnectOptions>(OpenIdConnectDefaults.Authentic
         if (!string.IsNullOrEmpty(objectId))
         {
             var store = context.HttpContext.RequestServices.GetRequiredService<UserProfileStore>();
-            await store.UpsertUserAsync(objectId, displayName, email, context.HttpContext.RequestAborted);
+            try
+            {
+                await store.UpsertUserAsync(objectId, displayName, email, context.HttpContext.RequestAborted);
+            }
+            catch (Exception ex)
+            {
+                var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "Failed to persist user profile for {ObjectId}; sign-in will continue.", objectId);
+            }
         }
     };
 });
