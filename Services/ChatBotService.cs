@@ -65,14 +65,14 @@ public class ChatBotService
 
     public async Task<ChatBotResult> GetReplyAsync(string message, IReadOnlyList<ChatMessage> history, CancellationToken cancellationToken)
     {
-        var token = _configuration["GitHubModels:Token"];
-        if (string.IsNullOrWhiteSpace(token))
+        var apiKey = _configuration["Groq:ApiKey"];
+        if (string.IsNullOrWhiteSpace(apiKey))
         {
-            _logger.LogWarning("GitHubModels:Token is not configured; chatbot cannot answer.");
+            _logger.LogWarning("Groq:ApiKey is not configured; chatbot cannot answer.");
             return ChatBotResult.Failure("The chat assistant isn't configured yet. Please use the contact form instead.");
         }
 
-        var model = _configuration["GitHubModels:Model"] ?? "openai/gpt-4o-mini";
+        var model = _configuration["Groq:Model"] ?? "llama-3.1-8b-instant";
         var docsContext = await _docsStore.GetContextAsync(cancellationToken);
 
         var systemPrompt = string.IsNullOrWhiteSpace(docsContext)
@@ -94,13 +94,12 @@ public class ChatBotService
 
         var requestBody = new ChatCompletionRequest(model, messages, 1024);
 
-        var client = _httpClientFactory.CreateClient("github-models");
-        using var request = new HttpRequestMessage(HttpMethod.Post, "https://models.github.ai/inference/chat/completions")
+        var client = _httpClientFactory.CreateClient("groq");
+        using var request = new HttpRequestMessage(HttpMethod.Post, "https://api.groq.com/openai/v1/chat/completions")
         {
             Content = JsonContent.Create(requestBody, options: JsonOptions)
         };
-        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-        request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
         try
         {
@@ -109,7 +108,7 @@ public class ChatBotService
 
             if (!response.IsSuccessStatusCode)
             {
-                _logger.LogError("GitHub Models API returned {StatusCode}: {Body}", response.StatusCode, body);
+                _logger.LogError("Groq API returned {StatusCode}: {Body}", response.StatusCode, body);
                 return ChatBotResult.Failure("Sorry, the chat assistant is having trouble right now. Please try again shortly.");
             }
 
@@ -125,7 +124,7 @@ public class ChatBotService
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
-            _logger.LogError(ex, "Failed to call GitHub Models API.");
+            _logger.LogError(ex, "Failed to call Groq API.");
             return ChatBotResult.Failure("Sorry, the chat assistant is having trouble right now. Please try again shortly.");
         }
     }
