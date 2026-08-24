@@ -65,14 +65,14 @@ public class ChatBotService
 
     public async Task<ChatBotResult> GetReplyAsync(string message, IReadOnlyList<ChatMessage> history, CancellationToken cancellationToken)
     {
-        var apiKey = _configuration["Anthropic:ApiKey"];
-        if (string.IsNullOrWhiteSpace(apiKey))
+        var token = _configuration["GitHubModels:Token"];
+        if (string.IsNullOrWhiteSpace(token))
         {
-            _logger.LogWarning("Anthropic:ApiKey is not configured; chatbot cannot answer.");
+            _logger.LogWarning("GitHubModels:Token is not configured; chatbot cannot answer.");
             return ChatBotResult.Failure("The chat assistant isn't configured yet. Please use the contact form instead.");
         }
 
-        var model = _configuration["Anthropic:Model"] ?? "claude-sonnet-5";
+        var model = _configuration["GitHubModels:Model"] ?? "openai/gpt-4o-mini";
         var docsContext = await _docsStore.GetContextAsync(cancellationToken);
 
         var systemPrompt = string.IsNullOrWhiteSpace(docsContext)
@@ -85,22 +85,22 @@ public class ChatBotService
             trimmedMessage = trimmedMessage[..MaxMessageLength];
         }
 
-        var messages = history
+        var messages = new List<ChatCompletionMessage> { new("system", systemPrompt) };
+        messages.AddRange(history
             .TakeLast(MaxHistoryMessages)
             .Where(m => m.Role is "user" or "assistant" && !string.IsNullOrWhiteSpace(m.Content))
-            .Select(m => new AnthropicMessage(m.Role, m.Content.Length > MaxMessageLength ? m.Content[..MaxMessageLength] : m.Content))
-            .Append(new AnthropicMessage("user", trimmedMessage))
-            .ToList();
+            .Select(m => new ChatCompletionMessage(m.Role, m.Content.Length > MaxMessageLength ? m.Content[..MaxMessageLength] : m.Content)));
+        messages.Add(new ChatCompletionMessage("user", trimmedMessage));
 
-        var requestBody = new AnthropicRequest(model, 1024, systemPrompt, messages);
+        var requestBody = new ChatCompletionRequest(model, messages, 1024);
 
-        var client = _httpClientFactory.CreateClient("anthropic");
-        using var request = new HttpRequestMessage(HttpMethod.Post, "https://api.anthropic.com/v1/messages")
+        var client = _httpClientFactory.CreateClient("github-models");
+        using var request = new HttpRequestMessage(HttpMethod.Post, "https://models.github.ai/inference/chat/completions")
         {
             Content = JsonContent.Create(requestBody, options: JsonOptions)
         };
-        request.Headers.Add("x-api-key", apiKey);
-        request.Headers.Add("anthropic-version", "2023-06-01");
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
 
         try
         {
@@ -109,12 +109,12 @@ public class ChatBotService
 
             if (!response.IsSuccessStatusCode)
             {
-                _logger.LogError("Anthropic API returned {StatusCode}: {Body}", response.StatusCode, body);
+                _logger.LogError("GitHub Models API returned {StatusCode}: {Body}", response.StatusCode, body);
                 return ChatBotResult.Failure("Sorry, the chat assistant is having trouble right now. Please try again shortly.");
             }
 
-            var parsed = JsonSerializer.Deserialize<AnthropicResponse>(body, JsonOptions);
-            var reply = parsed?.Content?.FirstOrDefault(c => c.Type == "text")?.Text;
+            var parsed = JsonSerializer.Deserialize<ChatCompletionResponse>(body, JsonOptions);
+            var reply = parsed?.Choices?.FirstOrDefault()?.Message?.Content;
 
             if (string.IsNullOrWhiteSpace(reply))
             {
@@ -125,24 +125,23 @@ public class ChatBotService
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
-            _logger.LogError(ex, "Failed to call Anthropic API.");
+            _logger.LogError(ex, "Failed to call GitHub Models API.");
             return ChatBotResult.Failure("Sorry, the chat assistant is having trouble right now. Please try again shortly.");
         }
     }
 
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
-    private record AnthropicMessage(string Role, string Content);
+    private record ChatCompletionMessage(string Role, string Content);
 
-    private record AnthropicRequest(
+    private record ChatCompletionRequest(
         string Model,
-        [property: JsonPropertyName("max_tokens")] int MaxTokens,
-        string System,
-        List<AnthropicMessage> Messages);
+        List<ChatCompletionMessage> Messages,
+        [property: JsonPropertyName("max_tokens")] int MaxTokens);
 
-    private record AnthropicResponse(List<AnthropicContentBlock>? Content);
+    private record ChatCompletionResponse(List<ChatCompletionChoice>? Choices);
 
-    private record AnthropicContentBlock(string Type, string? Text);
+    private record ChatCompletionChoice(ChatCompletionMessage? Message);
 }
 
 public record ChatBotResult(bool IsSuccess, string Reply)
