@@ -7,6 +7,9 @@ using Microsoft.Identity.Web;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<UserProfileStore>();
+builder.Services.AddSingleton<ChatDocsStore>();
+builder.Services.AddSingleton<ChatBotService>();
+builder.Services.AddHttpClient("anthropic");
 
 builder.Services.AddRazorPages();
 
@@ -64,5 +67,6 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapAccountEndpoints();
+app.MapChatEndpoints();
 
 app.Run();
