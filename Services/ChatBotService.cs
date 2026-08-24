@@ -13,10 +13,16 @@ public class ChatBotService
     private const string ServiceFacts = """
         You are the help assistant for the Digital Identity Team, Ministry of Education (New Zealand) website.
         This site introduces four Digital Identity Services to schools, kura, tertiary providers, sector IT staff and whanau.
-        Answer only using the facts below and any supplementary documents provided. Never invent capabilities, statistics
-        or testimonials that are not stated here. If you don't know the answer, say so plainly and point the visitor to
-        the relevant service page, the "Get in touch" form on this site, or harry.nguyen@education.govt.nz. Keep answers
-        short, plain-language, and welcoming to non-technical readers, with more technical detail only if asked.
+        Answer primarily using the facts below and any supplementary documents provided. Never invent capabilities,
+        statistics or testimonials that are not stated here or found via search. Keep answers short, plain-language, and
+        welcoming to non-technical readers, with more technical detail only if asked.
+
+        You also have a web search tool, restricted to official New Zealand government domains. Only use it when a
+        question cannot be answered from the facts and documents below - do not use it for anything unrelated to these
+        services or the Ministry of Education. If you do use search results, say so in your answer (e.g. "According to
+        [site]...") and still point the visitor to the official reference link. If neither the facts below nor a
+        restricted search turn up an answer, say so plainly and point the visitor to the "Get in touch" form on this
+        site or harry.nguyen@education.govt.nz - never guess.
 
         1. Education Sector Logon (ESL): identity management, authentication and authorisation giving secure single-account
            access to education sector applications. Serves early learning providers, schools and kura, tertiary institutions,
@@ -72,7 +78,9 @@ public class ChatBotService
             return ChatBotResult.Failure("The chat assistant isn't configured yet. Please use the contact form instead.");
         }
 
-        var model = _configuration["Groq:Model"] ?? "llama-3.1-8b-instant";
+        var model = _configuration["Groq:Model"] ?? "groq/compound";
+        var searchDomains = _configuration.GetSection("Groq:SearchDomains").Get<string[]>()
+            ?? new[] { "education.govt.nz", "applications.education.govt.nz", "govt.nz" };
         var docsContext = await _docsStore.GetContextAsync(cancellationToken);
 
         var systemPrompt = string.IsNullOrWhiteSpace(docsContext)
@@ -92,7 +100,8 @@ public class ChatBotService
             .Select(m => new ChatCompletionMessage(m.Role, m.Content.Length > MaxMessageLength ? m.Content[..MaxMessageLength] : m.Content)));
         messages.Add(new ChatCompletionMessage("user", trimmedMessage));
 
-        var requestBody = new ChatCompletionRequest(model, messages, 1024);
+        var searchSettings = searchDomains.Length > 0 ? new SearchSettings(searchDomains.ToList()) : null;
+        var requestBody = new ChatCompletionRequest(model, messages, 1024, searchSettings);
 
         var client = _httpClientFactory.CreateClient("groq");
         using var request = new HttpRequestMessage(HttpMethod.Post, "https://api.groq.com/openai/v1/chat/completions")
@@ -133,10 +142,14 @@ public class ChatBotService
 
     private record ChatCompletionMessage(string Role, string Content);
 
+    private record SearchSettings(
+        [property: JsonPropertyName("include_domains")] List<string> IncludeDomains);
+
     private record ChatCompletionRequest(
         string Model,
         List<ChatCompletionMessage> Messages,
-        [property: JsonPropertyName("max_tokens")] int MaxTokens);
+        [property: JsonPropertyName("max_tokens")] int MaxTokens,
+        [property: JsonPropertyName("search_settings"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] SearchSettings? SearchSettings);
 
     private record ChatCompletionResponse(List<ChatCompletionChoice>? Choices);
 
