@@ -72,7 +72,7 @@ public class ChatBotService
             return ChatBotResult.Failure("The chat assistant isn't configured yet. Please use the contact form instead.");
         }
 
-        var model = _configuration["Groq:Model"] ?? "llama-3.1-8b-instant";
+        var model = _configuration["Groq:Model"] ?? "openai/gpt-oss-20b";
         var docsContext = await _docsStore.GetContextAsync(cancellationToken);
 
         var systemPrompt = string.IsNullOrWhiteSpace(docsContext)
