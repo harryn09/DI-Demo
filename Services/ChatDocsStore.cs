@@ -6,7 +6,7 @@ namespace DigitalIdentitySite.Services;
 public class ChatDocsStore
 {
     private static readonly string[] TextExtensions = { ".txt", ".md" };
-    private static readonly TimeSpan CacheLifetime = TimeSpan.FromMinutes(10);
+    private static readonly TimeSpan CacheLifetime = TimeSpan.FromMinutes(30);
 
     private readonly BlobContainerClient? _containerClient;
     private readonly ILogger<ChatDocsStore> _logger;
@@ -46,12 +46,23 @@ public class ChatDocsStore
             return _cachedContext;
         }
 
+        await RefreshAsync(cancellationToken);
+        return _cachedContext;
+    }
+
+    public async Task RefreshAsync(CancellationToken cancellationToken = default)
+    {
+        if (_containerClient is null)
+        {
+            return;
+        }
+
         await _refreshLock.WaitAsync(cancellationToken);
         try
         {
             if (DateTimeOffset.UtcNow - _cachedAtUtc < CacheLifetime)
             {
-                return _cachedContext;
+                return;
             }
 
             _cachedContext = await LoadContextAsync(cancellationToken);
@@ -65,8 +76,6 @@ public class ChatDocsStore
         {
             _refreshLock.Release();
         }
-
-        return _cachedContext;
     }
 
     private async Task<string> LoadContextAsync(CancellationToken cancellationToken)
