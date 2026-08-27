@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<UserProfileStore>();
 builder.Services.AddSingleton<ChatDocsStore>();
 builder.Services.AddSingleton<ChatBotService>();
+builder.Services.AddHostedService<ChatDocsRefreshService>();
 builder.Services.AddHttpClient("groq");
 
 builder.Services.AddRazorPages();
